@@ -66,6 +66,8 @@ def scatha():
     global x
     global scatha1
     global fromLast
+    global scathaList
+    scathaList.append("Scatha")
     fromLast = time.time()
 
     scatha1 +=1
@@ -73,6 +75,8 @@ def worm():
     print("worm")
     global worm1
     global fromLast
+    global scathaList
+    scathaList.append("worm")
     fromLast = time.time()
     worm1 +=1
 
