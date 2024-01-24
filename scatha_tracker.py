@@ -1,7 +1,8 @@
 import time
 import threading
 start = time.time()
-
+from pynput import keyboard
+import os
 import json
 
 
@@ -13,9 +14,14 @@ import json
 #scatha farming time
 
 
+path = "scathSave"
+isExist = os.path.exists(path)
+if not isExist:
+    os.mkdir(path)
+
+
 #print(start)
-from pynput import keyboard
-import os
+
 x = 0
 runner = True
 scatha1 = 0
