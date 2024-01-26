@@ -78,6 +78,7 @@ def scatha():
 
     scatha1 +=1
 def worm():
+    h.stop()#could be important to stop processing keypresses
     print("worm")
     global worm1
     global fromLast
