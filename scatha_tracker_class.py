@@ -75,13 +75,16 @@ class info():
         print("not yet fully developed")
         #time.sleep(2)
         #return homeScreen()
+        self.options()
     def abKey(self):
         print("=====KEY TRACKER INFO=====")
         print("Moduel: pynput")
+        print("The only time this program moniters keypresses outside of window is in scatha tracking mode")
+        print("This can be easily varified in the code")
     def options(self):
-        print("1. Open Github in broswer")
-        print("2. Return to Home")
-        print("3. About KeyTracker")
+        print("1. Open Github page in broswer")
+        print("2. About KeyTracker")
+        print("3. Return to home")
         uin = input("Choose number: ")
         if uin == "1":
             webbrowser.open("https://github.com/vjgtigers/ScathaHunter", new=0, autoraise=True)
@@ -89,7 +92,7 @@ class info():
             self.abKey()
         if uin == "3":
             return homeScreen()
-    #options(self)
+
 def programEnd():
     print("Exiting Program")
     exit()
@@ -105,7 +108,7 @@ def homeScreen():
     elif uin == "2":
         viewAch()
     elif uin == "3":
-        info().options()
+        info()
     elif uin == "4":
         programEnd()
 
