@@ -9,7 +9,7 @@ import threading
 class mainTracker():
     save = {
         "scathaList" : ["None","None","None","None","None","None","None4","None3","None2","None1"],
-        "achievments": [],
+        "achievments": [[0,["BackToBack", "Get 2 Scathas back to back"]],[]],
         "userData": [],
         "initalData": []
     }
@@ -113,7 +113,7 @@ class mainTracker():
         return homeScreen()
 
 
-    def keyTracker(self):
+    def keyTracker(self): #i dont think currently in use
         pp = {
             'm': self.scathaCall,
             'n': self.wormCall,
@@ -123,33 +123,6 @@ class mainTracker():
         }
         with keyboard.GlobalHotKeys(pp) as self.h:
             self.h.join()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     def scathaCall(self):
         print("scatha")
