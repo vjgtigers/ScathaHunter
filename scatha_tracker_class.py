@@ -4,6 +4,7 @@ import os
 import json
 import time
 import webbrowser
+import threading
 
 class mainTracker():
     save = {
@@ -16,6 +17,7 @@ class mainTracker():
     sessionScatha = 0
     startTime = time.time()
     fromLast = 0
+    isActive = True
     def __init__(self):
         self.path = "scathSave"
         isExist = os.path.exists(self.path)
@@ -42,9 +44,111 @@ class mainTracker():
             else:
                 print("exiting program")
                 exit()
+        elif os.path.isfile(self.path+"/save.txt") == True and input("Would you like to open current save? (y/n):") == "y":
+                with open(self.path+"/save.txt") as saveImport:
+                    self.save = json.load(saveImport)
+                print(self.save)
+                self.initThreads()
+        else:
+            print("returning to homescreen")
+            time.sleep(2)
+            return homeScreen()
 
 
-    isActive = True
+    def initThreads(self):
+        #self.keyTracker()
+        #keyThread = threading.Thread(target=self.keyTracker)
+        #keyThread.start()
+        #keyThread.join()
+        printThread = threading.Thread(target=self.thread_function)
+        printThread.start()
+        #printThread.join()
+        #self.isActive =False
+        #exit()
+        pp = {
+            'm': self.scathaCall,
+            'n': self.wormCall,
+            'b': self.quitter
+
+        }
+        with keyboard.GlobalHotKeys(pp) as self.h:
+            self.h.join()
+
+
+
+
+        print("next")
+
+
+    def thread_function(self):
+        initScatha = self.save["initalData"][0]
+        initWorm = self.save["initalData"][1]
+        start = time.time()
+        while self.isActive:
+            time.sleep(1)
+            scathaList = self.save["scathaList"]
+            os.system('cls')
+            print(self.isActive)
+            print("Session Scathas: " + str(self.sessionScatha) + "\t \t \t \t \t 1." + self.save["scathaList"][len(scathaList) - 1])
+            print("Session Worms: " + str(self.sessionWorm) + "\t \t \t \t \t 2." + self.save["scathaList"][len(scathaList) - 2])
+            total = self.sessionScatha + self.sessionWorm
+            conTime = time.time() - start
+            if total != 0:
+                print("Avg Time Per Worm: " + str(round(conTime / total, 2)) + " sec" + " \t\t\t 4." + self.save["scathaList"][len(scathaList) - 3])
+            else:
+                print("none")
+            print("Last Scatha:" + str(round(time.time() - self.fromLast)) + " Sec" + "\t \t \t\t 5." + self.save["scathaList"][len(scathaList) - 4])
+            print("Scatha Find RNG:", end="")
+            if total != 0:
+                if self.sessionScatha / total > .2:
+                    print("above RNG", end="")
+                elif self.sessionScatha / total < .2:
+                    print("below RNG", end="")
+                else:
+                    print("Equal RNG", end="")
+                print("\t \t \t 5." + scathaList[len(scathaList) - 6])
+            else:
+                print("Summon a worm/Scatha!!")
+        os.system("cls")
+        return homeScreen()
+
+
+    def keyTracker(self):
+        pp = {
+            'm': self.scathaCall,
+            'n': self.wormCall,
+            'b': self.quitter,
+            'v': self.quitter
+
+        }
+        with keyboard.GlobalHotKeys(pp) as self.h:
+            self.h.join()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     def scathaCall(self):
@@ -53,7 +157,7 @@ class mainTracker():
         self.save["scathaList"].append("Scatha")
         self.fromLast = time.time()
         self.sessionScatha +=1
-    def worm(self):
+    def wormCall(self):
         print("worm")
         global worm1
         global fromLast
@@ -62,8 +166,9 @@ class mainTracker():
         self.fromLast = time.time()
         self.sessionWorm +=1
     def quitter(self):
+        self.h.stop()
         self.isActive = False
-
+        print("wuitting")
 
 class viewAch():
     def __init__(self):
@@ -72,6 +177,7 @@ class viewAch():
         return homeScreen()
 class info():
     def __init__(self):
+        os.system("cls")
         print("not yet fully developed")
         #time.sleep(2)
         #return homeScreen()

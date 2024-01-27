@@ -1,5 +1,5 @@
 import threading
-
+import time
 class DomainOperations:
 
     def __init__(self):
@@ -8,9 +8,12 @@ class DomainOperations:
 
     def resolve_domain(self):
         self.domain_ip = 'foo'
+        print("start")
+        time.sleep(4)
 
     def generate_website_thumbnail(self):
         self.website_thumbnail= 'bar'
+        print("asfd")
 
     def run(self):
         t1 = threading.Thread(target=self.resolve_domain)
