@@ -11,7 +11,8 @@ class mainTracker():
         "scathaList" : ["None","None","None","None","None","None","None4","None3","None2","None1"],
         "achievments": [[0,["BackToBack", "Get 2 Scathas back to back"]],[]],
         "userData": [],
-        "initalData": []
+        "initalData": [],
+        "sv" : "0.0.1"
     }
     sessionWorm = 0
     sessionScatha = 0
@@ -144,10 +145,23 @@ class mainTracker():
         print("wuitting")
 
 class viewAch():
+    path = "scathSave"
     def __init__(self):
+        os.system("cls")
         print("not yet developed")
-        time.sleep(2)
-        return homeScreen()
+        #time.sleep(2)
+        #return homeScreen()
+
+        if os.path.isfile(self.path + "/save.txt"):
+            with open(self.path + "/save.txt") as saveImport:
+                self.save = json.load(saveImport)
+
+        #print(self.save["achievments"][0][1][0])
+        isCom = lambda i: f" -Complete- " if i[0] == 1 else f" -Incomplete- "
+        for i in self.save["achievments"]:
+            print(i[1][0] + isCom(i) + i[1][1])
+
+
 class info():
     def __init__(self):
         os.system("cls")
@@ -155,11 +169,13 @@ class info():
         #time.sleep(2)
         #return homeScreen()
         self.options()
+
+
     def abKey(self):
         print("=====KEY TRACKER INFO=====")
         print("Moduel: pynput")
         print("The only time this program moniters keypresses outside of window is in scatha tracking mode")
-        print("This can be easily varified in the code")
+        print("This can be easily varified in the code - unless i made a mistake :/")
     def options(self):
         print("1. Open Github page in broswer")
         print("2. About KeyTracker")
