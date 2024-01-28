@@ -9,9 +9,10 @@ import threading
 class mainTracker():
     save = {
         "scathaList" : ["None","None","None","None","None","None","None4","None3","None2","None1"],
-        "achievments": [[0,["BackToBack", "Get 2 Scathas back to back"]],[]],
+        "achievments": [[0,["BackToBack", "Get 2 Scathas back to back"]],[0,["Unlikely", "Get 2 Worms within 40 Sec"]], [0,["Impossible?", "Get 2 Worms within 30 Sec"]]],
         "userData": [],
         "initalData": [],
+        "recordedData":[0,0],
         "sv" : "0.0.1"
     }
     sessionWorm = 0
@@ -114,6 +115,12 @@ class mainTracker():
         return homeScreen()
 
 
+    def saveSave(self):
+
+        with open(self.path + "/save.txt", "w") as outfile:
+            json.dump(self.save, outfile)
+
+
     def keyTracker(self): #i dont think currently in use
         pp = {
             'm': self.scathaCall,
@@ -127,18 +134,23 @@ class mainTracker():
 
     def scathaCall(self):
         print("scatha")
-        global fromLast
+
         self.save["scathaList"].append("Scatha")
         self.fromLast = time.time()
         self.sessionScatha +=1
+        self.save["recordedData"][0] += 1
+        self.saveSave()
+
+
     def wormCall(self):
         print("worm")
-        global worm1
-        global fromLast
-        global scathaList
+
         self.save["scathaList"].append("worm")
         self.fromLast = time.time()
         self.sessionWorm +=1
+        self.save["recordedData"][1] += 1
+        self.saveSave()
+
     def quitter(self):
         self.h.stop()
         self.isActive = False
@@ -165,7 +177,8 @@ class viewAch():
 class info():
     def __init__(self):
         os.system("cls")
-        print("not yet fully developed")
+        print("not yet fully developed - achivements will not currently show that they have been completed.")
+        print("However they should be able to be completed retroactivly")
         #time.sleep(2)
         #return homeScreen()
         self.options()
